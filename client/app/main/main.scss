@@ -28,3 +28,33 @@
     margin-top: 70px;
     border-top: 1px solid #E5E5E5;
 }
+
+.eventName {
+  text-align: center
+}
+[rowspawn] {
+  vertical-align: center;
+}
+.timesTable {
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  overflow: scroll;
+  width:auto;
+}
+#timesTable{
+  overflow:scroll;
+  max-height: 30em;
+}
+.hour {
+  width:15%
+}
+.minutes {
+  width: 85%;
+}
+.selected {
+  background-color: blue;
+}

@@ -1,38 +1,62 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
+<div class="col-lg-12">
+  <h2 class="eventName"> Lets make an Event: <input type="text" ng-model="event.name" placeholder="Name"></h2>
+<div>
 
-<header class="hero-unit" id="banner">
-  <div class="container">
-    <h1>'Allo, 'Allo!</h1>
-    <p class="lead">Kick-start your next web app with Angular Fullstack</p>
-    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
-  </div>
-</header>
-
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">Features:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in awesomeThings">
-        <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="deleteThing(thing)">&times;</button></a></li>
-      </ul>
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <h3 class="colTitle">Select Dates:</h3>
+    <div class="jumbotron">
+      <div style="display:inline-block; float:left">
+        <datepicker ng-click="updateDay()" ng-model="activeDate" min-date="minDate" class="well well-sm" multi-select='selectedDates'></datepicker>
+      </div>
+      <div class="">
+        Days:
+      </div>
+      <div style="clear:both">
+      </div>
     </div>
   </div>
 
-  <form class="thing-form">
-    <label>Syncs in realtime across clients</label>
-    <p class="input-group">
-      <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="newThing">
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary" ng-click="addThing()">Add New</button>
-      </span>
-    </p>
-  </form>
-</div>
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <h3 class="colTitle">Select Times:</h3>
+    <div class="jumbotron">
+      <tabset>
+        <tab ng-repeat="day in days" heading="{{::day[0].timeInMs | date:'shortDate' }}">
+          <div id="timesTable">
+            <table class="table timesTable"  cellpadding="0" cellspacing="0">
+              <tr>
+                <th >Time:</th>
+                <td>Select: </td>
+              </tr>
+              <tr ng-repeat-start="hour in dayHours[$index]">
+                <td class="hour" rowspan="2">{{::day[$index*2].timeInMs | date: 'h a'}}</td>
+                <td ng-class="{selected: day[2*$index].suggested }" class="minutes" ng-mousedown="startDrag(day,2*$index)" ng-mouseover="onMouseDown(day,2*$index)" ng-mouseup="onMouseUp(day,2*$index)">
+                  :{{::day[2*$index].timeInMs | date: 'mm'}}
+                </td>
+              </tr>
+              <tr ng-repeat-end>
+                <td ng-class="{selected: day[1+2*$index].suggested}" class="minutes" ng-mousedown="startDrag(day,1+2*$index)" ng-mouseover="onMouseDown(day,2*$index+1)" ng-mouseup="onMouseUp(day,2*$index)">
+                  :{{::day[$index*2+1].timeInMs | date:'m'}}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </tab>
+      </tabset>
+    </div>
+  </div>
+
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <h3 class="colTitle">Settings:</h3>
+    <div class="jumbotron">
+      <h4 class="colTitle">Description</h4>
+       <textarea ng-model="event.description" class="form-control" > </textarea>
+       <button ng-click="saveEvent()" class="btn btn-primary">1 More Step</button>
+    </div>
+  </div>
 
 <footer class="footer">
   <div class="container">
-      <p>Angular Fullstack v2.0.13 |
-        <a href="https://twitter.com/tyhenkel">@tyhenkel</a> |
-         <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
+    <p>Footer Here</p>
   </div>
 </footer>
