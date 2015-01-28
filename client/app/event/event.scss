@@ -1,0 +1,58 @@
+.timesTable {
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  overflow: scroll;
+  width:auto;
+}
+#timesTable{
+  overflow:scroll;
+  max-height: 30em;
+  border-collapse: collapse;
+}
+.hour {
+  width:5%
+}
+.minutes {
+  width: 18% !important;
+}
+.responses{
+  width: 10%
+}
+.ablehead {
+  width: 15%;
+}
+.maybehead{
+  width:15%
+}
+.optional {
+  display:inline;
+}
+.colTitle {
+  display: inline-block;
+}
+.error {
+  color: red;
+  text-align: center;
+  font-size:200%;
+}
+.selectedContacts {
+  // border: 3px;
+  // background-color: pink;
+  border: 3px solid blue;
+  border-collapse: collapse;
+}
+.able {
+  width:15%;
+  background-color: #57ad4d;
+}
+.maybe {
+  width:15%;
+  background-color: yellow;
+}
+.hideme {
+  // display: none;
+}

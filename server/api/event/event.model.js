@@ -3,11 +3,17 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
+var responseSchema = new Schema({
+  name: String,
+  UUID: String,
+  response: String
+})
+
 
 var daySchema = new Schema({
   timeInMs: Number,
   suggested: Boolean,
-  response: Object,
+  response: [responseSchema]
 })
 
 var contactSchema = new Schema({
@@ -24,10 +30,14 @@ var EventSchema = new Schema({
   name: {type: String, required: true},
   description: String,
   days: [Schema.Types.Mixed],
-  ownerEmail: String,
+  creator: {
+    name: {type: String, required: true},
+    email: {type: String, required: true}
+  },
   location: {type: String, default: "none"},
   contacts: [contactSchema],
-  endDate: {type: Date }
+  endDate: {type: Date },
+  responded: [String]
 },{minimize: false});
 
 module.exports = mongoose.model('Event', EventSchema);

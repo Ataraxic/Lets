@@ -22,8 +22,12 @@ exports.show = function(req, res) {
 
 // Creates a new event in the DB.
 exports.create = function(req, res) {
+  console.log("this is the body",req.body)
   Event.create(req.body, function(err, event) {
-    if(err) { return handleError(res, err); }
+    if(err) {
+      console.log('this is the err',err)
+      return handleError(res, err);
+    }
     return res.json(201, event);
   });
 };
@@ -34,7 +38,12 @@ exports.update = function(req, res) {
   Event.findById(req.params.id, function (err, event) {
     if (err) { return handleError(res, err); }
     if(!event) { return res.send(404); }
-    var updated = _.merge(event, req.body);
+
+    var userID = req.body.userID;
+    var updated = mergeObjects(req.body,event,userID);
+    if (updated.responded.indexOf(userID)<0){
+      updated.responded.push(userID);
+    }
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
       return res.json(200, event);
@@ -56,4 +65,17 @@ exports.destroy = function(req, res) {
 
 function handleError(res, err) {
   return res.send(500, err);
+}
+
+function mergeObjects(newObj,foundObj,userID){
+  for (var i=0; i<foundObj.days.length;i++){
+    for (var n=0; n<foundObj.days[i].length;n++){
+      console.log('the ID',newObj.days[i][n].response[userID]);
+      if (newObj.days[i][n].response[userID]){
+        console.log('found something matching');
+        foundObj.days[i][n].response[userID] = newObj.days[i][n].response[userID];
+      }
+    }
+  }
+  return foundObj;
 }

@@ -50,11 +50,27 @@
   max-height: 30em;
 }
 .hour {
-  width:15%
+  width:8%
 }
 .minutes {
-  width: 85%;
+  width: 92%;
 }
 .selected {
-  background-color: blue;
+  background-color: rgb(57,175,195);
 }
+.optional {
+  display:inline;
+}
+.colTitle {
+  display: inline-block;
+}
+.error {
+  color: red;
+  text-align: center;
+  font-size:200%;
+}
+
+// .datepicker {
+//   display:inline-block;
+//   float:left;
+// }

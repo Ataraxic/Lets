@@ -1,0 +1,103 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="col-lg-12">
+  <h2>Event {{event.name}} <span> created By: {{event.creator.name}}</span></h2>
+  <p>Description: {{event.description}} </p>
+</div>
+<div class="col-lg-3">
+  <h3 class="colTitle">User Info</h3>
+  <div class="jumbotron">
+    <h4 class="colTitle">Name</h4><span class="optional">  (Required)</span>
+    <input name="userName" class="form-control" type="text" ng-model="user.name" placeholder="" required>
+    <h4 class="colTitle">Comments</h4><span class="optional">  (optional)</span>
+    <textarea name="userComment" class="form-control" ng-model="user.comment" class="form-control" ></textarea>
+  </div>
+</div>
+
+<div class="col-lg-6 col-md-6 col-sm-12">
+  <h3 class="colTitle">Select Times:</h3>
+  <div class="jumbotron">
+    <tabset>
+      <tab ng-repeat="day in days" heading="{{::day[0].timeInMs | date:'shortDate' }}">
+        <div id="timesTable">
+          <table class="table timesTable"  cellpadding="0" cellspacing="0">
+            <tr>
+              <th class="hour">T</th>
+              <th class="minutes"> </th>
+              <th class="ablehead">Yes</th>
+              <th class="maybehead">Maybe</th>
+              <th  class="responses" ng-repeat="response in fakeArr"> {{$index +1}}</th>
+            </tr>
+            <tr ng-repeat-start="hour in dayHours" ng-class="{selectedContacts: contactsIndex.indexOf(2*$index)!==-1}">
+              <td class="hour" rowspan="2">{{::day[$index*2].timeInMs | date: 'h'}}</td>
+              <td class="minutes" ng-class="{selected: day[2*$index].suggested}">:{{::day[2*$index].timeInMs | date: 'mm a'}}</td>
+              <td ng-class="day[2*$index].response[userID].resStr==='able' ? 'able' : 'hideme' "
+              ng-mousedown="onMouseDown(day[2*$index],'able',userID)"
+              ng-mouseover="onMouseOver(day[2*$index],'able',userID)"
+              ng-mouseup="onMouseUp(day[2*$index],'able',userID)">
+                &#10004
+              </td>
+              <td ng-class="day[2*$index].response[userID].resStr==='maybe' ? 'maybe' : 'hideme' "
+              ng-mousedown="onMouseDown(day[2*$index],'maybe',userID)"
+              ng-mouseover="onMouseOver(day[2*$index],'maybe',userID)"
+              ng-mouseup="onMouseUp(day[2*$index],'maybe',userID)">
+                &#10004
+              </td>
+
+              <td class="responses"
+              ng-click="genList(2*$parent.$index,$parent.$parent.$index,day)"
+              ng-repeat="response in fakeArr"
+              ng-class="{'able': (day[2*$parent.$index].numAble>$index), 'maybe': ($index>=day[2*$parent.$index].numAble && $index<day[2*$parent.$index].numAble+day[2*$parent.$index].numMaybe) }">
+                b
+              </td>
+
+            </tr>
+            <tr ng-repeat-end ng-class="{selectedContacts: contactsIndex.indexOf(2*$index+1)!==-1}">
+              <td ng-class="{selected: day[1+2*$index].suggested}" class="minutes">:{{::day[$index*2+1].timeInMs | date:'mm'}}</td>
+              <td ng-class="day[2*$index+1].response[userID].resStr==='able' ? 'able' : 'hideme' "
+              ng-mousedown="onMouseDown(day[2*$index+1],'able',userID)"
+              ng-mouseover="onMouseOver(day[2*$index+1],'able',userID)"
+              ng-mouseup="onMouseUp(day[2*$index+1],'able',userID)">
+                &#10004
+              </td>
+              <td ng-class="day[2*$index+1].response[userID].resStr==='maybe' ? 'maybe' : 'hideme' "
+              ng-mousedown="onMouseDown(day[2*$index+1],'maybe',userID)"
+              ng-mouseover="onMouseOver(day[2*$index+1],'maybe',userID)"
+              ng-mouseup="onMouseUp(day[2*$index+1],'maybe',userID)">
+                &#10004
+              </td>
+
+              <td class="responses"
+              ng-click="genList(2*$parent.$index+1,$parent.$parent.$index,day)"
+              ng-repeat="response in fakeArr"
+              ng-class="{'able': (day[2*$parent.$index+1].numAble>$index), 'maybe': ($index>=day[2*$parent.$index+1].numAble && $index<day[2*$parent.$index+1].numAble+day[2*$parent.$index+1].numMaybe) }">
+                b
+              </td>
+
+            </tr>
+          </table>
+        </div>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<div class="col-lg-2">
+  <h3 class="colTitle">Responses:</h3>
+  <div class="jumbotron">
+    <h4>Able</h4>
+    <ul>
+      <li ng-repeat="able in listView.able">{{able.name}}</li>
+    </ul>
+    <h4>Maybe</h4>
+    <ul>
+      <li ng-repeat="maybe in listView.maybe">{{maybe.name}}</li>
+    </ul>
+    <h4>Unable</h4>
+    <ul>
+      <li ng-repeat="unable in listView.unable">{{unable.name}}</li>
+    </ul>
+  </div>
+</div>
+
+<div><button ng-click="updateEvent()">Submit</button></div>

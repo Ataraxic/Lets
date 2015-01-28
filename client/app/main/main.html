@@ -1,12 +1,36 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
-<div class="col-lg-12">
+<!-- <div class="col-lg-12">
   <h2 class="eventName"> Lets make an Event: <input type="text" ng-model="event.name" placeholder="Name"></h2>
-<div>
+<div> -->
+<form ng-submit="saveEvent()" name="eventForm">
 
-  <div class="col-lg-4 col-md-6 col-sm-12">
+  <div class="col-lg-3 col-md-6 col-sm-12">
+    <h3 class="colTitle">Event Info:</h3>
+    <div class="jumbotron">
+        <h3 class="eventName"> Lets make an Event: </h3>
+        <h4 class="colTitle">Name</h4>
+        <input name="eventName" class="form-control" type="text" ng-model="event.name" placeholder="" required>
+        <h4 class="colTitle">Location</h4><span class="optional">  (optional)</span>
+        <input name="eventLocation" class="form-control" type="text" ng-model="event.location" placeholder="">
+        <h4 class="colTitle">Description</h4><span class="optional">  (optional)</span>
+        <textarea name="eventDescription" class="form-control" ng-model="event.description" class="form-control" ></textarea>
+        <h4 class="colTitle">Your Name</h4>
+        <input name="creatorName" class="form-control" type="text" ng-model="event.creator.name" placeholder="" required>
+        <h4 class="colTitle">Your Email</h4>
+        <input name="creatorEmail" class="form-control" type="email" ng-model="event.creator.email" placeholder="" required>
+        <!-- <div ng-show="">
+          <button ng-click="saveEvent()" class="btn btn-primary">1 More Step</button>
+        </div> -->
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-md-6 col-sm-12">
     <h3 class="colTitle">Select Dates:</h3>
     <div class="jumbotron">
-      <div style="display:inline-block; float:left">
+      <div>
+        <span ng-show="!dateChosen" class="error">Must Select a date</span>
+      </div>
+      <div class="datepicker">
         <datepicker ng-click="updateDay()" ng-model="activeDate" min-date="minDate" class="well well-sm" multi-select='selectedDates'></datepicker>
       </div>
       <div class="">
@@ -17,7 +41,7 @@
     </div>
   </div>
 
-  <div class="col-lg-4 col-md-6 col-sm-12">
+  <div class="col-lg-3 col-md-6 col-sm-12">
     <h3 class="colTitle">Select Times:</h3>
     <div class="jumbotron">
       <tabset>
@@ -30,12 +54,12 @@
               </tr>
               <tr ng-repeat-start="hour in dayHours[$index]">
                 <td class="hour" rowspan="2">{{::day[$index*2].timeInMs | date: 'h a'}}</td>
-                <td ng-class="{selected: day[2*$index].suggested }" class="minutes" ng-mousedown="startDrag(day,2*$index)" ng-mouseover="onMouseDown(day,2*$index)" ng-mouseup="onMouseUp(day,2*$index)">
+                <td ng-class="{selected: day[2*$index].suggested }" class="minutes" ng-mousedown="startDrag(day,2*$index)" ng-mouseover="onMouseOver(day,2*$index)" ng-mouseup="onMouseUp(day,2*$index)">
                   :{{::day[2*$index].timeInMs | date: 'mm'}}
                 </td>
               </tr>
               <tr ng-repeat-end>
-                <td ng-class="{selected: day[1+2*$index].suggested}" class="minutes" ng-mousedown="startDrag(day,1+2*$index)" ng-mouseover="onMouseDown(day,2*$index+1)" ng-mouseup="onMouseUp(day,2*$index)">
+                <td ng-class="{selected: day[1+2*$index].suggested}" class="minutes" ng-mousedown="startDrag(day,1+2*$index)" ng-mouseover="onMouseOver(day,2*$index+1)" ng-mouseup="onMouseUp(day,2*$index+1)">
                   :{{::day[$index*2+1].timeInMs | date:'m'}}
                 </td>
               </tr>
@@ -46,14 +70,39 @@
     </div>
   </div>
 
-  <div class="col-lg-4 col-md-6 col-sm-12">
-    <h3 class="colTitle">Settings:</h3>
+  <div class="col-lg-3 col-md-6 col-sm-12">
+    <h3 class="colTitle">Send to:</h3>
     <div class="jumbotron">
-      <h4 class="colTitle">Description</h4>
-       <textarea ng-model="event.description" class="form-control" > </textarea>
-       <button ng-click="saveEvent()" class="btn btn-primary">1 More Step</button>
+      <h4 class="colTitle">Invite </h4>
+      <tabset>
+        <tab heading="Quick">
+          <div ng-show="!eventCreated">
+            <div>Warning: Anyone with the link can respond</div>
+            <textarea ng-model="contacts" name="contacts" class="form-control" class="form-control" ></textarea>
+            <button type="submit" class="btn btn-primary">Create Event</button>
+          </div>
+          <div ng-show="eventCreated">
+            <h3>Event Created!</h3>
+            <span>Send this link to invitees
+              <div><a href="{{eventLink}}">{{eventLink}}</a>
+              </div>
+            </span>
+          </div>
+        </tab>
+        <tab heading="Login">
+          <login><login>
+        </tab>
+      </tabset>
+      <!-- <textarea ng-model="event.description" class="form-control" ></textarea>
+      <div ng-show="">
+        <button ng-click="saveEvent()" class="btn btn-primary">1 More Step</button> -->
+      </div>
     </div>
   </div>
+
+
+</form>
+
 
 <footer class="footer">
   <div class="container">

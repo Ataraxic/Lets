@@ -7,7 +7,8 @@ angular.module('letsV2App', [
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
-  'gm.datepickerMultiSelect'
+  'gm.datepickerMultiSelect',
+  'LocalStorageModule'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
